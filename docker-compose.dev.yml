@@ -1,0 +1,46 @@
+version: '3.7'
+services:
+  memebia-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    command: 'npx nest start --watch --debug 0.0.0.0'
+    ports:
+      - 3001:3000
+      - 9229:9229
+    depends_on:
+      - postgres
+
+  prisma-studio:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    ports:
+      - 5555:5555
+    command: npm run prisma:studio
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
+    name: nest-db
