@@ -16,7 +16,7 @@ Table User {
 Table RefreshToken {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
-  user User [not null]
+  user User
   userId String [not null]
 }
 
