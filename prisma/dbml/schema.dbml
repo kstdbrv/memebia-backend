@@ -1,0 +1,28 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  email String [unique, not null]
+  password String [not null]
+  firstname String
+  lastname String
+  refreshTokens RefreshToken [not null]
+}
+
+Table RefreshToken {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  user User [not null]
+  userId String [not null]
+}
+
+Enum Role {
+  ADMIN
+  USER
+}
+
+Ref: RefreshToken.userId > User.id
