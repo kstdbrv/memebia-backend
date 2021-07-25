@@ -1,0 +1,2 @@
+export const WINSTON_LOGGER = 'WINSTON_LOGGER';
+export const CLS_NAMESPACE = 'CLS_NAMESPACE';

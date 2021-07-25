@@ -1,0 +1,70 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthOutputDto {
+  """JWT access token"""
+  accessToken: String!
+
+  """JWT expires in seconds"""
+  expiresIn: Int!
+
+  """JWT refresh token"""
+  refreshToken: String!
+  user: User!
+}
+
+input ChangePasswordInputDto {
+  newPassword: String!
+  oldPassword: String!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+input LoginInputDto {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  changePassword(data: ChangePasswordInputDto!): User!
+  login(data: LoginInputDto!): AuthOutputDto!
+  refreshToken(token: String!): TokenOutputDto!
+  signup(data: SignupInputDto!): AuthOutputDto!
+  update(data: UpdateUserInputDto!): User!
+}
+
+type Query {
+  me: User!
+}
+
+input SignupInputDto {
+  email: String!
+  password: String!
+}
+
+type TokenOutputDto {
+  """JWT access token"""
+  accessToken: String!
+
+  """JWT expires in seconds"""
+  expiresIn: Int!
+
+  """JWT refresh token"""
+  refreshToken: String!
+}
+
+input UpdateUserInputDto {
+  firstname: String
+  lastname: String
+}
+
+type User {
+  createdAt: Date!
+  email: String!
+  firstname: String!
+  id: ID!
+  lastname: String!
+  updatedAt: Date!
+}

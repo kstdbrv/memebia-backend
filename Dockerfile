@@ -21,7 +21,7 @@ RUN chown -R node:node /app
 USER node
 WORKDIR /app
 
-COPY --chown=node:node package*.json ./
+COPY --chown=node:node package.json yarn.lock ./
 RUN yarn install --production --frozen-lockfile
 
 COPY  --chown=node:node --from=builder /app/dist ./
@@ -30,4 +30,4 @@ COPY  --chown=node:node --from=builder /app/node_modules/.prisma/client ./node_m
 ENV NODE_ENV production
 EXPOSE 80
 
-CMD [ "node", "./src/main.js" ]
+CMD [ "node", "./main.js" ]
