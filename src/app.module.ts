@@ -1,3 +1,4 @@
+import { MemeModule } from '@features/memes/meme.module';
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from '@config/configuration';
@@ -12,6 +13,7 @@ import { CommonModule } from '@features/common/common.module';
 import { APP_FILTER } from '@nestjs/core';
 import { ApplicationExceptionFilter } from '@features/common/filters/application-exception/application-exception.filter';
 import { LoggerMiddleware } from '@features/common/services/logger/logger-middleware/logger.middleware';
+import { ImportModule } from '@features/import/import.module';
 
 @Module({
   imports: [
@@ -34,9 +36,11 @@ import { LoggerMiddleware } from '@features/common/services/logger/logger-middle
       },
       inject: [ConfigService],
     }),
+    MemeModule,
     AuthModule,
     UserModule,
     CommonModule,
+    ImportModule,
   ],
   providers: [
     {

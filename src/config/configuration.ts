@@ -38,6 +38,9 @@ const configuration: ConfigurationVariables = {
     jwtIssuer: process.env.SECURITY_JWT_ISSUER || 'http://localhost',
     https: process.env.SECURITY_HTTPS === 'true',
   },
+  import: {
+    deliveryHost: process.env.IMPORT_DELIVERY_HOST,
+  },
 };
 
 export default (): ConfigurationVariables => configuration;

@@ -14,7 +14,7 @@ import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // app.useLogger(app.get(WinstonLoggerService));
+  app.useLogger(app.get(WinstonLoggerService));
 
   // Validation
   app.useGlobalPipes(new ValidationPipe());
@@ -44,7 +44,6 @@ async function bootstrap() {
       origin: corsConfig.origins,
     });
   }
-
   await app.listen(nestConfig.port);
 }
 bootstrap();

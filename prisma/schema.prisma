@@ -21,6 +21,30 @@ model User {
   firstname    String?
   lastname     String?
   refreshTokens RefreshToken[]
+  ratedMemes   RatedMemes?
+}
+
+model Meme {
+  id           String         @id @default(cuid())
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  imageId      String         @unique
+  text         String?
+  source       SourceType
+  sourceId     String
+}
+
+enum SourceType {
+  TELEGRAM
+  UPLOADED
+}
+
+model RatedMemes {
+    id          String  @id @default(cuid())
+    liked       String[]
+    disliked    String[]
+    user        User    @relation(references: [id], fields: [userId])
+    userId      String  @unique
 }
 
 enum Role {

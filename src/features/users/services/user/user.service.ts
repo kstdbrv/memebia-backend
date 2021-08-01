@@ -12,6 +12,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PasswordService } from '@features/auth/services/password/password.service';
 import { PrismaService } from '@features/common/services/prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { RatedMemes } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -28,6 +29,15 @@ export class UserService {
       return await this.prisma.user.create({
         data: {
           ...data,
+          ratedMemes: {
+            create: {
+              liked: [],
+              disliked: [],
+            },
+          },
+        },
+        include: {
+          ratedMemes: true,
         },
       });
     } catch (e) {
