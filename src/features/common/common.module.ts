@@ -20,6 +20,7 @@ import winston from 'winston';
       provide: WINSTON_LOGGER,
       useValue: winston.createLogger({
         level: 'info',
+        format: winston.format.json(),
         transports: [new winston.transports.Console()],
       }),
     },
