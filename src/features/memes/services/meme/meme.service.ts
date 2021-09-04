@@ -30,8 +30,12 @@ export class MemeService {
     });
   }
 
-  async getNewMemes(payload: { userId: string }): Promise<MemeWithUrlModel[]> {
-    const { userId } = payload;
+  async getNewMemes(payload: {
+    userId: string;
+    total: number;
+    offset: number;
+  }): Promise<MemeWithUrlModel[]> {
+    const { userId, total = 10, offset = 0 } = payload;
     const ratedMemes = await this.prismaService.ratedMemes.findFirst({
       where: {
         userId,
@@ -44,7 +48,8 @@ export class MemeService {
             id: { in: [...ratedMemes.liked, ...ratedMemes.disliked] },
           },
         },
-        take: 10,
+        take: total,
+        skip: offset,
       })
       .then((items) =>
         items.map((item) => memeToMemeWithUrlDto(item, this.deliveryHost)),

@@ -17,12 +17,14 @@ import {
   Param,
   Post,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
+  ApiQuery,
 } from '@nestjs/swagger';
 
 @Controller('memes')
@@ -43,11 +45,25 @@ export class MemeController {
     description: 'Returns next memes array',
     type: NextMemesOutputDto,
   })
+  @ApiQuery({
+    name: 'total',
+    example: 50,
+  })
+  @ApiQuery({
+    name: 'offset',
+    example: 0,
+  })
   @ApiBearerAuth()
-  async nextMemes(@ContextUser() user: User): Promise<NextMemesOutputDto> {
+  async nextMemes(
+    @ContextUser() user: User,
+    @Query('total') total: string,
+    @Query('offset') offset: string,
+  ): Promise<NextMemesOutputDto> {
     this.logger.log('nextMemes');
     const nextMemes = await this.memeService.getNewMemes({
       userId: user.id,
+      total: +total,
+      offset: +offset,
     });
     return {
       memes: nextMemes,
